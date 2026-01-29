@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h3>My Posts</h3>
+<hr>
+      {% for post in posts %}
+        <div class="Card mb-3">
+          <a href="{% url 'detail-post' post.id%}" class="card-title text-primary">{{post.title | title}} </a><span class="text-muted">By {{post.author}}</span></a>
+          {% if user == post.author %}
+           <a href="{% url 'update-post' post.id%}" class="btn btn-sm btn-outline-primary">Update</a>
+           <a href="{% url 'delete-post' post.id%}" class="btn btn-sm btn-outline-primary">Delete</a>
+          {% endif %}
+          <div class="Card-body">
+            <p class="card-text">{{post.content | truncatechars:200}}</p>
+            <small class="text-muted">{{post.created_at | date }}</small>
+          </div>
+        </div>
+      {% empty %}
+        <p>No posts available</p>
+      {% endfor %}
+{% endblock content %}
